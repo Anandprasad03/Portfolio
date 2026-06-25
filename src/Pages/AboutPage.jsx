@@ -13,7 +13,6 @@ export default function AboutPage() {
       <Reveal>
         <SectionTitle eyebrow="about-me" title="About Me" />
       </Reveal>
-
       <div className="about-grid">
         {/* Left — bio */}
         <Reveal dir="left">
