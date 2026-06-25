@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Hyperspeed from "./Components/Hyperspeed";
+import Navbar from "./Components/Navbar";
 import HomePage from "./Pages/HomePage";
 import AboutPage from "./Pages/AboutPage";
 import SkillsPage from "./Pages/SkillsPage";
@@ -7,27 +8,14 @@ import ProjectsPage from "./Pages/ProjectsPage";
 import AchievementsPage from "./Pages/AchievementsPage";
 import ContactPage from "./Pages/ContactPage";
 
-const NAV_LINKS = ["Home", "About", "Skills", "Projects", "Achievements", "Contact"];
-
 export default function App() {
   const [activePage, setActivePage] = useState("Home");
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [activePage]);
 
-  const navigate = (page) => {
-    setActivePage(page);
-    setMenuOpen(false);
-  };
+  const navigate = (page) => setActivePage(page);
 
   const pages = {
     Home: <HomePage navigate={navigate} />,
@@ -63,13 +51,6 @@ export default function App() {
           -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
           animation: shimmer 4s linear infinite;
         }
-        .nav-btn {
-          background: none; border: none; cursor: pointer;
-          font-size: 13px; font-family: monospace; letter-spacing: .08em;
-          padding: 7px 16px; border-radius: 8px;
-          transition: all .22s; white-space: nowrap;
-        }
-        .nav-btn:hover { color: #38bdf8 !important; background: #38bdf810 !important; }
         .link-btn {
           display: inline-flex; align-items: center; gap: 6px;
           padding: 10px 22px; border-radius: 10px;
@@ -111,25 +92,6 @@ export default function App() {
           transition: all .3s; position: relative; overflow: hidden;
         }
         .achieve-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px #00000050; }
-        .mobile-menu-overlay {
-          position: fixed; inset: 0; background: #060b18f8;
-          z-index: 199; display: flex; flex-direction: column; align-items: center; justify-content: center;
-          gap: 16px; animation: fadeUp .25s ease;
-        }
-        .mobile-nav-btn {
-          background: none; border: none; cursor: pointer;
-          font-size: 20px; font-family: monospace; letter-spacing: .1em;
-          padding: 12px 32px; border-radius: 10px; color: #64748b;
-          transition: all .2s; width: 220px; text-align: center;
-        }
-        .mobile-nav-btn:hover, .mobile-nav-btn.active { color: #38bdf8; background: #38bdf810; }
-        @media (max-width: 640px) {
-          .desktop-nav { display: none !important; }
-          .hamburger { display: flex !important; }
-        }
-        @media (min-width: 641px) {
-          .hamburger { display: none !important; }
-        }
       `}</style>
 
       {/* Fixed animated background */}
@@ -140,53 +102,8 @@ export default function App() {
       {/* Overlay to darken background slightly for readability */}
       <div style={{ position: "fixed", inset: 0, zIndex: 1, background: "rgba(6,11,24,0.55)", pointerEvents: "none" }} />
 
-      {/* NAV */}
-      <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 300,
-        background: scrolled ? "#060b18e8" : "transparent",
-        backdropFilter: scrolled ? "blur(20px)" : "none",
-        borderBottom: scrolled ? "1px solid #1e293b66" : "1px solid transparent",
-        height: 64, padding: "0 28px",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        transition: "all .4s",
-      }}>
-        <button onClick={() => navigate("Home")} style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "monospace", fontWeight: 900, fontSize: 20, letterSpacing: ".06em" }}>
-          <span className="glow-text">AP</span>
-        </button>
-
-        {/* Desktop nav */}
-        <div className="desktop-nav" style={{ display: "flex", gap: 2 }}>
-          {NAV_LINKS.map((n) => (
-            <button key={n} className="nav-btn" onClick={() => navigate(n)}
-              style={{ color: activePage === n ? "#38bdf8" : "#475569", background: activePage === n ? "#38bdf810" : "none" }}>
-              {n}
-            </button>
-          ))}
-        </div>
-
-        {/* Hamburger */}
-        <button className="hamburger" onClick={() => setMenuOpen(o => !o)}
-          style={{ background: "none", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", gap: 5, padding: 8 }}>
-          {[0, 1, 2].map(i => (
-            <span key={i} style={{ display: "block", width: 22, height: 2, background: "#64748b", borderRadius: 2,
-              transition: "all .3s",
-              transform: menuOpen ? (i === 0 ? "rotate(45deg) translate(5px,5px)" : i === 2 ? "rotate(-45deg) translate(5px,-5px)" : "scaleX(0)") : "none",
-            }} />
-          ))}
-        </button>
-      </nav>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="mobile-menu-overlay" onClick={() => setMenuOpen(false)}>
-          {NAV_LINKS.map((n) => (
-            <button key={n} className={`mobile-nav-btn ${activePage === n ? "active" : ""}`}
-              onClick={(e) => { e.stopPropagation(); navigate(n); }}>
-              {n}
-            </button>
-          ))}
-        </div>
-      )}
+      {/* Navbar */}
+      <Navbar activePage={activePage} navigate={navigate} />
 
       {/* Page content */}
       <main style={{ position: "relative", zIndex: 2, paddingTop: 64 }}>

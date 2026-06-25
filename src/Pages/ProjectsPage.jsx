@@ -11,8 +11,8 @@ const PROJECTS = [
       "Deployed end-to-end on Render with a responsive frontend for non-technical farming communities.",
     ],
     github: "https://github.com/anandprasad03",
-    demo: "#",
-    accent: "#22d3a8",
+    demo: "https://agroguard-pi.vercel.app/",
+    accentClass: "color-cyan",
     icon: "🌾",
     category: "GenAI + Backend",
   },
@@ -25,8 +25,8 @@ const PROJECTS = [
       "Implemented ImageKit for optimized media storage and delivery, deployed on Render with a persistent MongoDB backend.",
     ],
     github: "https://github.com/anandprasad03",
-    demo: "#",
-    accent: "#818cf8",
+    demo: "https://audio-stream-nine.vercel.app/",
+    accentClass: "color-purple",
     icon: "🎵",
     category: "Full-Stack · MERN",
   },
@@ -39,8 +39,8 @@ const PROJECTS = [
       "RESTful API backend that dynamically fetches and serves user-generated content, enabling seamless cross-client data synchronization.",
     ],
     github: "https://github.com/anandprasad03",
-    demo: "#",
-    accent: "#f472b6",
+    demo: "https://basic-social-app.vercel.app/",
+    accentClass: "color-rose",
     icon: "🌐",
     category: "Full-Stack · MERN",
   },
@@ -48,56 +48,47 @@ const PROJECTS = [
 
 export default function ProjectsPage() {
   return (
-    <div className="section-inner">
+    <div className="section-inner font-inter">
       <Reveal>
         <SectionTitle eyebrow="my-work" title="Projects" />
       </Reveal>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+      <div className="projects-list">
         {PROJECTS.map((p, i) => (
           <Reveal key={p.title} delay={i * 0.1} dir={i % 2 === 0 ? "left" : "right"}>
             <Card3D>
-              <div className="proj-card" style={{ "--accent": p.accent }}>
-                {/* Top accent bar */}
-                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg,${p.accent},transparent)`, borderRadius: "20px 20px 0 0" }} />
+              <div className="proj-card-inner">
+                <div className={`proj-card-top-line ${p.accentClass}`} />
+                <div className={`proj-card-glow ${p.accentClass}`} />
 
-                {/* Subtle inner glow */}
-                <div style={{ position: "absolute", top: -80, right: -80, width: 220, height: 220, borderRadius: "50%", background: `radial-gradient(${p.accent}0d,transparent 70%)`, pointerEvents: "none" }} />
-
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 14, marginBottom: 20 }}>
-                  <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-                    <div style={{ width: 52, height: 52, borderRadius: 14, background: `${p.accent}14`, border: `1px solid ${p.accent}28`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, flexShrink: 0 }}>{p.icon}</div>
+                <div className="proj-header">
+                  <div className="proj-header-left">
+                    <div className={`proj-icon-box ${p.accentClass}`}>{p.icon}</div>
                     <div>
-                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 2 }}>
-                        <h3 style={{ fontSize: 22, fontWeight: 800, color: p.accent, letterSpacing: "-.01em", margin: 0 }}>{p.title}</h3>
-                        <span style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: ".1em", color: p.accent, background: `${p.accent}10`, border: `1px solid ${p.accent}25`, padding: "2px 8px", borderRadius: 4, fontWeight: 700 }}>{p.category}</span>
+                      <div className="proj-title-row">
+                        <h3 className={`proj-title ${p.accentClass}`}>{p.title}</h3>
+                        <span className={`proj-category ${p.accentClass}`}>{p.category}</span>
                       </div>
-                      <p style={{ margin: 0, fontSize: 13, color: "#475569" }}>{p.subtitle}</p>
+                      <p className="proj-subtitle">{p.subtitle}</p>
                     </div>
                   </div>
-                  <div style={{ display: "flex", gap: 8 }}>
-                    <a href={p.github} target="_blank" rel="noreferrer" className="link-btn"
-                      style={{ color: "#64748b", border: "1px solid #1e293b", background: "none", fontSize: 12, padding: "7px 14px" }}>↗ Code</a>
-                    <a href={p.demo} className="link-btn"
-                      style={{ color: p.accent, border: `1px solid ${p.accent}40`, background: `${p.accent}0e`, fontSize: 12, padding: "7px 14px" }}>▶ Demo</a>
+                  <div className="proj-links">
+                    <a href={p.github} target="_blank" rel="noreferrer" className="proj-link-code">↗ Code</a>
+                    <a href={p.demo} className={`proj-link-demo ${p.accentClass}`}>▶ Demo</a>
                   </div>
                 </div>
 
-                <div style={{ marginBottom: 18 }}>
+                <div className="proj-bullets">
                   {p.bullets.map((b, j) => (
-                    <p key={j} style={{ margin: "0 0 10px", fontSize: 14, color: "#94a3b8", paddingLeft: 18, position: "relative", lineHeight: 1.7 }}>
-                      <span style={{ position: "absolute", left: 0, color: p.accent, fontWeight: 700 }}>▸</span>{b}
+                    <p key={j} className="proj-bullet">
+                      <span className={`proj-bullet-arrow ${p.accentClass}`}>▸</span>{b}
                     </p>
                   ))}
                 </div>
 
                 <div>
                   {p.stack.map((s) => (
-                    <span key={s} style={{
-                      display: "inline-block", margin: "2px", padding: "3px 10px",
-                      borderRadius: 6, fontSize: 11, fontFamily: "monospace", fontWeight: 700,
-                      color: p.accent, background: `${p.accent}0e`, border: `1px solid ${p.accent}22`,
-                    }}>{s}</span>
+                    <span key={s} className={`proj-stack-tag ${p.accentClass}`}>{s}</span>
                   ))}
                 </div>
               </div>
@@ -106,13 +97,11 @@ export default function ProjectsPage() {
         ))}
       </div>
 
-      {/* Bottom CTA */}
       <Reveal delay={0.3}>
-        <div style={{ textAlign: "center", marginTop: 52 }}>
-          <GlassPanel style={{ display: "inline-block", padding: "24px 40px" }}>
-            <p style={{ color: "#475569", fontSize: 14, marginBottom: 16 }}>More projects on GitHub</p>
-            <a href="https://github.com/anandprasad03" target="_blank" rel="noreferrer" className="link-btn"
-              style={{ background: "linear-gradient(135deg,#38bdf8,#818cf8)", color: "#fff", border: "none" }}>
+        <div className="more-projects-wrapper">
+          <GlassPanel className="more-projects-panel">
+            <p className="more-projects-text">More projects on GitHub</p>
+            <a href="https://github.com/anandprasad03" target="_blank" rel="noreferrer" className="btn-more-projects">
               ↗ View All on GitHub
             </a>
           </GlassPanel>

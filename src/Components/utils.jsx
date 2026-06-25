@@ -90,9 +90,33 @@ export function Card3D({ children, style = {} }) {
 export function SectionTitle({ eyebrow, title, width = 48 }) {
   return (
     <div style={{ marginBottom: 52 }}>
-      <div className="section-title-eyebrow">/{eyebrow || title.toLowerCase().replace(/ /g, "-")}</div>
-      <h2 className="section-title-main">{title}</h2>
-      <div className="section-title-bar" style={{ width }} />
+      <div style={{ 
+        fontFamily: "'Fira Code', 'JetBrains Mono', monospace", 
+        fontSize: 13, 
+        letterSpacing: ".15em", 
+        color: "#06b6d4", // Cyan accent
+        marginBottom: 8, 
+        fontWeight: 700, 
+        textTransform: "uppercase" 
+      }}>
+        /{eyebrow || title.toLowerCase().replace(/ /g, "-")}
+      </div>
+      <h2 style={{ 
+        fontSize: "clamp(32px, 5vw, 44px)", 
+        fontWeight: 900, 
+        color: "#f1f5f9", 
+        margin: "0 0 16px", 
+        fontFamily: "'Outfit', 'Montserrat', sans-serif", 
+        letterSpacing: "-.02em" 
+      }}>
+        {title}
+      </h2>
+      <div style={{ 
+        width, 
+        height: 4, 
+        borderRadius: 2, 
+        background: "linear-gradient(90deg, #8b5cf6, #f43f5e)" // Purple to Rose gradient
+      }} />
     </div>
   );
 }
@@ -101,10 +125,12 @@ export function SectionTitle({ eyebrow, title, width = 48 }) {
 export function GlassPanel({ children, style = {} }) {
   return (
     <div style={{
-      background: "rgba(13,21,38,0.7)",
+      background: "rgba(30, 27, 75, 0.4)", // Deep Cyber-Purple base
       backdropFilter: "blur(24px)",
-      border: "1px solid rgba(255,255,255,0.06)",
+      WebkitBackdropFilter: "blur(24px)",
+      border: "1px solid rgba(139, 92, 246, 0.2)", // Subtle purple border (#8b5cf6)
       borderRadius: 20,
+      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)", // Added depth
       ...style,
     }}>
       {children}
