@@ -1,16 +1,64 @@
-# React + Vite
+# Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal developer portfolio built with React and Vite, featuring a Three.js hyperspeed road animation as a live background, smooth page transitions, and animated UI components.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Hyperspeed background** — real-time Three.js WebGL animation with post-processing bloom
+- **Animated UI** — typewriter effect, scroll-reveal, 3D tilt cards, and count-up counters
+- **Multi-page SPA** — Home, About, Skills, Projects, Achievements, and Contact sections
+- **Responsive** — mobile hamburger menu with full-screen overlay nav
+- **Zero layout flash** — fixed background layer with scrollable content on top
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- [Three.js](https://threejs.org/) + [postprocessing](https://github.com/pmndrs/postprocessing) (bloom, SMAA)
+- Tailwind CSS + custom CSS animations
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Clone the repo
+git clone https://github.com/anandprasad03/Portfolio.git
+cd your-repo-name
+
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+## 📁 Project Structure
+
+```
+src/
+├── Components/
+│   └── Hyperspeed.jsx   # Three.js animated background
+├── Pages/
+│   ├── HomePage.jsx
+│   ├── AboutPage.jsx
+│   ├── SkillsPage.jsx
+│   ├── ProjectsPage.jsx
+│   ├── AchievementsPage.jsx
+│   └── ContactPage.jsx
+├── App.jsx              # Nav, routing, layout
+├── utils.jsx            # Shared hooks and components
+├── main.jsx             # Entry point
+└── index.css
+```
+
+## 📦 Build
+
+```bash
+npm run build
+```
+
+Output goes to the `dist/` folder, ready for static hosting (Vercel, Netlify, GitHub Pages, etc.).
+
+## 📄 License
+
+MIT
