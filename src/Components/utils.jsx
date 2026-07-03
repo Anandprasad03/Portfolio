@@ -91,7 +91,7 @@ export function SectionTitle({ eyebrow, title, width = 48 }) {
   return (
     <div style={{ marginBottom: 52 }}>
       <div style={{ 
-        fontFamily: "'Fira Code', 'JetBrains Mono', monospace", 
+        fontFamily: "var(--font-mono)", 
         fontSize: 13, 
         letterSpacing: ".15em", 
         color: "#06b6d4", // Cyan accent
@@ -103,10 +103,10 @@ export function SectionTitle({ eyebrow, title, width = 48 }) {
       </div>
       <h2 style={{ 
         fontSize: "clamp(32px, 5vw, 44px)", 
-        fontWeight: 900, 
+        fontWeight: 700, 
         color: "#f1f5f9", 
         margin: "0 0 16px", 
-        fontFamily: "'Outfit', 'Montserrat', sans-serif", 
+        fontFamily: "var(--font-display)", 
         letterSpacing: "-.02em" 
       }}>
         {title}

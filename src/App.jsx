@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Hyperspeed from "./Components/Hyperspeed";
 import Navbar from "./Components/Navbar";
 import HomePage from "./Pages/HomePage";
@@ -8,28 +8,50 @@ import ProjectsPage from "./Pages/ProjectsPage";
 import AchievementsPage from "./Pages/AchievementsPage";
 import ContactPage from "./Pages/ContactPage";
 
+// Order of sections on the page + the ids used to scroll to them.
+const SECTIONS = ["Home", "About", "Skills", "Projects", "Achievements", "Contact"];
+const sectionId = (page) => page.toLowerCase();
+
 export default function App() {
   const [activePage, setActivePage] = useState("Home");
+  const isClickScrolling = useRef(false);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [activePage]);
-
-  const navigate = (page) => setActivePage(page);
-
-  const pages = {
-    Home: <HomePage navigate={navigate} />,
-    About: <AboutPage />,
-    Skills: <SkillsPage />,
-    Projects: <ProjectsPage />,
-    Achievements: <AchievementsPage />,
-    Contact: <ContactPage />,
+  // Smooth-scroll to a section. Passed down to Navbar and to HomePage's CTAs.
+  const navigate = (page) => {
+    const el = document.getElementById(sectionId(page));
+    if (!el) return;
+    isClickScrolling.current = true;
+    setActivePage(page);
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Release the lock once the smooth scroll has settled.
+    window.clearTimeout(navigate._t);
+    navigate._t = window.setTimeout(() => { isClickScrolling.current = false; }, 900);
   };
 
+  // Scroll-spy: highlight the nav item for whichever section is in view.
+  useEffect(() => {
+    const sections = SECTIONS.map((s) => document.getElementById(sectionId(s))).filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (isClickScrolling.current) return;
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const match = SECTIONS.find((s) => sectionId(s) === entry.target.id);
+            if (match) setActivePage(match);
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+
+    sections.forEach((sec) => observer.observe(sec));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div style={{ minHeight: "100vh", background: "#060b18", fontFamily: "'Inter', system-ui, sans-serif", color: "#cbd5e1", position: "relative", overflowX: "hidden" }}>
+    <div style={{ minHeight: "100vh", background: "#060b18", fontFamily: "var(--font-body)", color: "#cbd5e1", position: "relative", overflowX: "hidden" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root { --sky: #38bdf8; --violet: #818cf8; --teal: #22d3a8; --pink: #f472b6; --amber: #fbbf24; }
 
@@ -54,21 +76,21 @@ export default function App() {
         .link-btn {
           display: inline-flex; align-items: center; gap: 6px;
           padding: 10px 22px; border-radius: 10px;
-          font-size: 13px; font-family: monospace; font-weight: 700;
+          font-size: 13px; font-family: var(--font-mono); font-weight: 700;
           cursor: pointer; transition: all .22s; text-decoration: none;
         }
         .link-btn:hover { transform: translateY(-2px) scale(1.02); }
         .card-3d { transition: transform .12s ease; }
         .pill {
           display: inline-block; padding: 5px 14px; border-radius: 999px;
-          font-size: 12px; font-family: monospace; font-weight: 600;
+          font-size: 12px; font-family: var(--font-mono); font-weight: 600;
           margin: 3px; background: #111827; border: 1px solid #1e293b; color: #94a3b8;
           transition: all .2s; cursor: default;
         }
         .pill:hover { color: #38bdf8; border-color: #38bdf844; transform: translateY(-2px); }
-        .page-content { animation: pageIn .5s cubic-bezier(.22,1,.36,1) both; }
+        .page-section { animation: pageIn .6s cubic-bezier(.22,1,.36,1) both; scroll-margin-top: 88px; }
         .section-inner { max-width: 960px; margin: 0 auto; padding: 80px 28px; }
-        .section-title-eyebrow { font-family: monospace; font-size: 10px; letter-spacing: .22em; color: #38bdf8; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; }
+        .section-title-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: .22em; color: #38bdf8; text-transform: uppercase; font-weight: 800; margin-bottom: 10px; }
         .section-title-main { font-size: clamp(28px,4vw,40px); font-weight: 800; color: #f1f5f9; letter-spacing: -.03em; margin-bottom: 14px; }
         .section-title-bar { height: 3px; border-radius: 2px; background: linear-gradient(90deg,#38bdf8,#818cf8,#22d3a8); margin-bottom: 52px; }
         .skill-card {
@@ -105,11 +127,26 @@ export default function App() {
       {/* Navbar */}
       <Navbar activePage={activePage} navigate={navigate} />
 
-      {/* Page content */}
+      {/* All pages stacked one below another — the navbar scrolls between them */}
       <main style={{ position: "relative", zIndex: 2, paddingTop: 64 }}>
-        <div key={activePage} className="page-content">
-          {pages[activePage]}
-        </div>
+        <section id="home" className="page-section">
+          <HomePage navigate={navigate} />
+        </section>
+        <section id="about" className="page-section">
+          <AboutPage />
+        </section>
+        <section id="skills" className="page-section">
+          <SkillsPage />
+        </section>
+        <section id="projects" className="page-section">
+          <ProjectsPage />
+        </section>
+        <section id="achievements" className="page-section">
+          <AchievementsPage />
+        </section>
+        <section id="contact" className="page-section">
+          <ContactPage />
+        </section>
       </main>
     </div>
   );

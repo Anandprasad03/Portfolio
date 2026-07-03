@@ -1,4 +1,5 @@
 import { Reveal, GlassPanel, SectionTitle } from "../Components/utils";
+import profilePic from "../assets/Profile-Pic.jpg";
 
 const TIMELINE = [
   { year: "2025", label: "Started B.Tech CSE", desc: "Enrolled at GIET University, Gunupur. Immediately began building projects.", colorClass: "color-cyan" },
@@ -17,7 +18,9 @@ export default function AboutPage() {
         {/* Left — bio */}
         <Reveal dir="left">
           <GlassPanel className="about-glass-panel">
-            <div className="ap-avatar">AP</div>
+            <div className="ap-avatar">
+              <img src={profilePic} alt="Anand Prasad" className="ap-avatar-photo" />
+            </div>
             <h3 className="about-name">Anand Prasad</h3>
             <p className="about-desc">
               I'm a first-year Computer Science student at <span className="about-desc-highlight">GIET University</span> with

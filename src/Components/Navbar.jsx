@@ -22,7 +22,7 @@ export default function Navbar({ activePage, navigate }) {
       <style>{`
         .nav-btn {
           background: none; border: none; cursor: pointer;
-          font-size: 13px; font-family: monospace; letter-spacing: .08em;
+          font-size: 13px; font-family: var(--font-mono); letter-spacing: .06em;
           padding: 7px 16px; border-radius: 8px;
           transition: all .22s; white-space: nowrap;
         }
@@ -34,7 +34,7 @@ export default function Navbar({ activePage, navigate }) {
         }
         .mobile-nav-btn {
           background: none; border: none; cursor: pointer;
-          font-size: 20px; font-family: monospace; letter-spacing: .1em;
+          font-size: 20px; font-family: var(--font-mono); letter-spacing: .08em;
           padding: 12px 32px; border-radius: 10px; color: #64748b;
           transition: all .2s; width: 220px; text-align: center;
         }
@@ -60,7 +60,7 @@ export default function Navbar({ activePage, navigate }) {
         transition: "all .4s ease",
       }}>
         {/* Logo */}
-        <button onClick={() => handleNavigate("Home")} style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "monospace", fontWeight: 900, fontSize: 20, letterSpacing: ".06em" }}>
+        <button onClick={() => handleNavigate("Home")} style={{ background: "none", border: "none", cursor: "pointer", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 20, letterSpacing: ".01em" }}>
           <span className="glow-text">AP</span>
         </button>
 
@@ -84,7 +84,7 @@ export default function Navbar({ activePage, navigate }) {
                 borderRadius: 999,
                 padding: "8px 18px",
                 fontSize: 13,
-                fontFamily: "'Inter', sans-serif",
+                fontFamily: "var(--font-body)",
                 fontWeight: activePage === n ? 600 : 500,
                 cursor: "pointer",
                 transition: "all 0.2s ease"

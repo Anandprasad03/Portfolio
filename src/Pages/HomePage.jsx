@@ -1,4 +1,5 @@
 import { useTypewriter, Counter, Reveal } from "../Components/utils";
+import profilePic from "../assets/Profile-Pic.jpg";
 
 export default function HomePage({ navigate }) {
   const typed = useTypewriter([
@@ -17,7 +18,9 @@ export default function HomePage({ navigate }) {
           <div className="hero-ring hero-ring-1" />
           <div className="hero-ring hero-ring-2" />
           <div className="hero-ring hero-ring-3" />
-          <div className="hero-center">AP</div>
+          <div className="hero-center">
+            <img src={profilePic} alt="Anand Prasad" className="hero-photo" />
+          </div>
           <div className="hero-orbit-dot hero-orbit-dot-1" />
           <div className="hero-orbit-dot hero-orbit-dot-2" />
           <div className="hero-orbit-dot hero-orbit-dot-3" />
